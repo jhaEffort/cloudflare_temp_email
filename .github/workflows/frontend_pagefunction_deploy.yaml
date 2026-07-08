@@ -50,6 +50,8 @@ jobs:
           cd frontend/
           pnpm install --no-frozen-lockfile
           pnpm build:pages
+          # 将编译好的文件复制到 pages 目录中，供 Wrangler 使用
+          cp -r dist ../pages/dist
           cd ../pages/
           echo '${{ secrets.PAGE_TOML }}' > wrangler.toml
           pnpm install --no-frozen-lockfile
