@@ -50,8 +50,13 @@ jobs:
           cd frontend/
           pnpm install --no-frozen-lockfile
           pnpm build:pages
-          # 将编译好的文件复制到 pages 目录中，供 Wrangler 使用
+          
+          # 将编译好的文件复制到 pages 目录中
           cp -r dist ../pages/dist
+          
+          # 【新增】将 functions 目录复制到 pages 目录，确保 Cloudflare 识别后端逻辑
+          if [ -d "../functions" ]; then cp -r ../functions ../pages/functions; fi
+          
           cd ../pages/
           echo '${{ secrets.PAGE_TOML }}' > wrangler.toml
           pnpm install --no-frozen-lockfile
